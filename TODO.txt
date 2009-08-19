@@ -1,0 +1,12 @@
+-   eigenes event, so dass Anbindung an clickcounting nicht mehr nötig
+    wäre
+
+-   Speichern der jeweiligen Obj-Werte f. z.B. Last Month in Katalog
+
+-   Speicherung ganzer Liste als abrufbare Objekte?!? Die ständige
+    Neugenerierung auf der Startseite ist Unsinn. Momentan nur
+    abgemildert durch plone.memoize
+
+-   Template alle Downloads last month (more...)
+
+-   Methoden fuer Auswertung "last three month"

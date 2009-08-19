@@ -1,0 +1,40 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:browser="http://namespaces.zope.org/browser">
+
+    <!--
+    <include package="plone.memoize" />
+    -->
+ 
+    <adapter factory=".adapters.Clickdates" />
+
+    <browser:page 
+        name="clickdates"
+        for="*"
+        class=".browser.ClickdatesView"
+        allowed_interface = ".browser.IClickdatesView"
+        permission="zope2.Public" />
+
+
+    <!-- hier vorerst nur zum testen 
+    die template muessen spaeter in eJournal uebernommen werden, damit
+    hbxt.clickdates möglichst universell einsetzbar ist
+    -->
+    <browser:pages
+        for="*"
+        class=".browser.ClickdatesView"
+        permission="cmf.ManagePortal">
+    
+        <browser:page
+            name="dlLastMonth"
+            template="browser/dlLastMonth.pt" />
+
+        <browser:page
+            name="dlThisMonth"
+            template="browser/dlThisMonth.pt" />
+
+    </browser:pages>
+
+
+</configure>

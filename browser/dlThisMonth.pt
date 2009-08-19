@@ -1,0 +1,53 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master">
+
+<metal:head fill-slot="top_slot"
+            tal:define="dummy python:request.set('disable_border',1)" />
+
+
+<div metal:fill-slot="main">
+
+
+    <h1>
+        Downloads This Month
+    </h1>
+
+    <p>Liste enthält alle Journalarticle und Discussionpaper, die im aktuellen Monat mindestens
+    einmal runtergeladen worden sind. Die Seite dient momentan nur Test- und Evaluierungszwecken und ist nur 
+    für Manager zugänglich <br />(siehe auch <a href="dlLastMonth">Downloads last month</a>). </p>
+
+
+    <div tal:define="view context/@@clickdates;
+        key  view/keyThisMonth">
+
+        <p><strong><span tal:replace="view/verboseThisMonth">July 2009</span></strong><br />
+        Downloads gesamt: <span tal:replace="view/sumThisMonth">123</span></p>
+
+        <ol>
+            <li tal:repeat="article python:view.thisMonth()" style="font-size:11px; padding-right:15px;">
+            [<strong><span tal:replace="python:article[1]">Downloads</span></strong>]
+                    <span tal:replace="python:', '.join(article[0].getAuthorsForTitle())">Authors</span>: 
+                    
+                    <a href="#" tal:attributes="href
+                        python:article[0].absolute_url()">
+                        <span tal:replace="python:article[0].Title()">Titel</span>
+                    </a> (<span tal:replace="python:article[0].portal_type">Discussionpaper</span> 
+                    <span tal:replace="python:article[0].getId()">2008-9</span>)
+
+                </li>
+                        
+         </ol>
+
+     </div>
+
+ </div>
+ </html>
+
+
+
+        
+
+        
+
+

@@ -45,7 +45,7 @@ class IClickdatesView(Interface):
         """downloads last month
         """
 
-    def keyLastMonth():
+    def keyLastMonth(month):
         """generates annotations key for last month.  
         eigene Methode um gegebenfalls (spaeter) die Keygenerierung von der
         template aus aufrufen zu können
@@ -75,19 +75,92 @@ class IClickdatesView(Interface):
         """sums all downloads this month
         """
 
+    def lastThreeMonth():
+        """sums all downloads for the last three months
+        """
+
+    def verboseLastThreeMonth():
+        """
+        returns string for last three month, e.g. Jul - Sep 2009
+        """
+
+
 
 class ClickdatesView(BrowserView):
     """
     """
         
- #   @memoize
+    def _intLastMonth(self, month):
+        """
+        returns number of last Month and Year before month
+        """
+        thisYear = datetime.date.today().year
+        if month == 1:
+            lastMonth = 12
+            lastMonthYear = thisYear -1
+        else:
+            lastMonth = month -1
+            lastMonthYear = thisYear
+
+        return (lastMonthYear, lastMonth)
+
+    def _keyLastMonth(self, month):
+        """
+        """
+        lastMonthYear = month[0]
+        lastMonth = month[1]
+
+        key = "%s-%s" %(lastMonthYear, lastMonth)
+        return key
+
+    
+    def _keyThisMonth(self):
+        """        
+        """
+        thisMonth = datetime.date.today().month
+        thisYear = datetime.date.today().year
+        key = "%s-%s" %(thisYear, thisMonth)
+        
+        return key
+
+
+    def _getClickdatesObjects(self):
+        """returns all objects with clickdates annotation
+        """
+        catalog = getToolByName(self.context, "portal_catalog")
+        
+        # beware: index 'object_provides' is not available in Plone 2.1 and 2.5!
+        # Please provide the index by hand or programmatically. You can
+        # use the code from Plone 3.x (CatalogTool) 
+        brains = catalog.searchResults(portal_type="JournalPaper", 
+                object_provides="hbxt.clickdates.interfaces.IClickdatesAnnotatable")
+
+        result = []
+        for brain in brains:
+            obj = brain.getObject() # optimize! clickdates sollten in irgendeiner Form in den catalog.
+            annotations = IAnnotations(obj)
+            if annotations.has_key(ANNOTATION):
+                result.append(obj)
+
+        return result
+
+    
+    def _countClickdates(self, obj, key):
+        """count clickdates values in a (by the other classmethods) given list
+        """
+        annotations = IAnnotations(obj)
+        clickdates = annotations[ANNOTATION]
+        c = clickdates[key]
+        return len(c)
+
+
+    
     def lastMonth(self):
         """
         """
-       
-        #testing
-        #k = "2009-5"
-        k = self.keyLastMonth()
+        
+        thisMonth = datetime.date.today().month
+        k = self._keyLastMonth(thisMonth)
 
         articles = self._getClickdatesObjects()
 
@@ -154,65 +227,7 @@ class ClickdatesView(BrowserView):
         return sum
 
 
-  #  @memoize
-    def keyLastMonth(self):
-        """
-        """
-        thisMonth = datetime.date.today().month
-        thisYear = datetime.date.today().year
-    
-        if thisMonth == 1:
-            lastMonth = 12
-            lastMonthYear = thisYear -1
-        else:
-            lastMonth = thisMonth -1
-            lastMonthYear = thisYear
-
-        key = "%s-%s" %(lastMonthYear, lastMonth)
-        return key
-
-    
-   # @memoize
-    def keyThisMonth(self):
-        """        
-        """
-        thisMonth = datetime.date.today().month
-        thisYear = datetime.date.today().year
-        key = "%s-%s" %(thisYear, thisMonth)
         
-        return key
-
-
-    def _getClickdatesObjects(self):
-        """returns all objects with clickdates annotation
-        """
-        catalog = getToolByName(self.context, "portal_catalog")
-        
-        # beware: index 'object_provides' is not available in Plone 2.1 and 2.5!
-        # Please provide the index by hand or programmatically. You can
-        # use the code from Plone 3.x (CatalogTool) 
-        brains = catalog.searchResults(object_provides="hbxt.clickdates.interfaces.IClickdatesAnnotatable")
-
-        result = []
-        for brain in brains:
-            obj = brain.getObject() # optimize! clickdates sollten in irgendeiner Form in den catalog.
-            annotations = IAnnotations(obj)
-            if annotations.has_key(ANNOTATION):
-                result.append(obj)
-
-        return result
-
-    
-    def _countClickdates(self, obj, key):
-        """count clickdates values in a (by the other classmethods) given list
-        """
-        annotations = IAnnotations(obj)
-        clickdates = annotations[ANNOTATION]
-        c = clickdates[key]
-        return len(c)
-
-    
-    #@memoize
     def verboseLastMonth(self):
         """
         """
@@ -234,14 +249,72 @@ class ClickdatesView(BrowserView):
 
         return literal
 
+    def verboseLastThreeMonth(self):
+        """
+        """
+        date = datetime.date.today()
+        thisMonth = datetime.date.today().month
+        month1 = self._intLastMonth(thisMonth)
+        month2 = self._intLastMonth(month1[1])
+        month3 = self._intLastMonth(month2[1])
 
-#    @memoize
+        date1 = date.replace(month=month3[1], year=month3[0])
+        date2 = date.replace(month=month1[1], year=month1[0])
+
+        m1 = date1.strftime("%b")
+        y1 = date2.strftime("%Y")
+
+        m2 = date2.strftime("%b")
+        y2 = date2.strftime("%Y")
+
+        if y1 == y2:
+            result = "%s - %s %s" %(m1, m2, y1)
+
+        else:
+            result = "%s %s - %s %s" %(m1, y1, m2, y2)
+
+        return result
+
+
     def verboseThisMonth(self):
         """
         """
         return datetime.date.today().strftime("%b %Y")
 
     
+    def lastThreeMonth(self):
+        """
+        """
+        thisMonth = datetime.date.today().month
+        month1 = self._intLastMonth(thisMonth)
+        month2 = self._intLastMonth(month1[1])
+        month3 = self._intLastMonth(month2[1])
 
+        threeMonth = [month1, month2, month3]
+        threeMonthKeys = [self._keyLastMonth(month) for month in threeMonth]
+        
+        articles = self._getClickdatesObjects()
+
+        result = []
+        for article in articles:
+            annotations = IAnnotations(article)
+            clickdates = annotations[ANNOTATION]
+            clicks = 0
+            
+            for key in threeMonthKeys:
+                if clickdates.has_key(key):
+                    t = self._countClickdates(article, key)
+                    clicks += t
+            #tuple
+            result.append((article, clicks))
+            
+        #Sortierung
+        list = sorted(result, key=lambda x:(x[1], x[0]))
+        list.reverse()
+        
+        return list
+
+
+       
         
 

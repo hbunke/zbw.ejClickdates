@@ -104,17 +104,16 @@ class ClickdatesView(BrowserView):
 
         return (lastMonthYear, lastMonth)
 
-    def _keyLastMonth(self, month):
+    def keyLastMonth(self, month):
         """
         """
         lastMonthYear = month[0]
         lastMonth = month[1]
-
         key = "%s-%s" %(lastMonthYear, lastMonth)
         return key
 
     
-    def _keyThisMonth(self):
+    def keyThisMonth(self):
         """        
         """
         thisMonth = datetime.date.today().month
@@ -160,7 +159,9 @@ class ClickdatesView(BrowserView):
         """
         
         thisMonth = datetime.date.today().month
-        k = self._keyLastMonth(thisMonth)
+        lastMonth = self._intLastMonth(thisMonth)
+        k = self.keyLastMonth(lastMonth)
+
 
         articles = self._getClickdatesObjects()
 
@@ -185,6 +186,7 @@ class ClickdatesView(BrowserView):
     def sumLastMonth(self):
         """
         """
+        
         s = self.lastMonth()
         sum = 0
         for article in s:
@@ -291,7 +293,7 @@ class ClickdatesView(BrowserView):
         month3 = self._intLastMonth(month2[1])
 
         threeMonth = [month1, month2, month3]
-        threeMonthKeys = [self._keyLastMonth(month) for month in threeMonth]
+        threeMonthKeys = [self.keyLastMonth(month) for month in threeMonth]
         
         articles = self._getClickdatesObjects()
 

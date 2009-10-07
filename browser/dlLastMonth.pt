@@ -19,7 +19,7 @@
 
 
     <div tal:define="view context/@@clickdates;
-        key  view/keyLastMonth">
+        ">
 
         <p><strong><span tal:replace="view/verboseLastMonth">July 2009</span></strong><br />
         Downloads gesamt: <span tal:replace="view/sumLastMonth">123</span></p>

@@ -260,21 +260,21 @@ class ClickdatesView(BrowserView):
         month2 = self._intLastMonth(month1[1])
         month3 = self._intLastMonth(month2[1])
 
-        date1 = date.replace(month=month3[1], year=month3[0])
-        date2 = date.replace(month=month1[1], year=month1[0])
+        date1 = date.replace(month=month3[1], year=month3[0], day=1)
+        date2 = date.replace(month=month1[1], year=month1[0], day=1)
 
         m1 = date1.strftime("%b")
-        y1 = date2.strftime("%Y")
+        y1 = date1.strftime("%Y")
 
         m2 = date2.strftime("%b")
         y2 = date2.strftime("%Y")
-
+        
         if y1 == y2:
             result = "%s - %s %s" %(m1, m2, y1)
 
         else:
             result = "%s %s - %s %s" %(m1, y1, m2, y2)
-
+        
         return result
 
 

@@ -51,13 +51,6 @@ class Clickdates:
             t.insert(k, datesList)
         else:
             t[k].append(date)
-
-
-        
-
-
-
-
         
         
         

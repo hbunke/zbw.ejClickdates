@@ -312,6 +312,7 @@ class ClickdatesView(BrowserView):
             
         #Sortierung
         list = sorted(result, key=lambda x:(x[1], x[0]))
+        
         list.reverse()
         
         return list

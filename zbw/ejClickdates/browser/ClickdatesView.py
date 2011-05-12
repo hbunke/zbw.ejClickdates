@@ -33,6 +33,7 @@ import datetime
 #                Listen auch später noch jederzeit abrufbar wären!
 #                Problem dabei: Erreichbar via Navigation?!
 
+# this is still the old key, named after the old package (not zbw...)
 ANNOTATION = "hbxt.clickdates"
 
 class IClickdatesView(Interface):
@@ -132,7 +133,7 @@ class ClickdatesView(BrowserView):
         # Please provide the index by hand or programmatically. You can
         # use the code from Plone 3.x (CatalogTool) 
         brains = catalog.searchResults(portal_type="JournalPaper", 
-                object_provides="hbxt.clickdates.interfaces.IClickdatesAnnotatable")
+                object_provides="zbw.ejClickdates.interfaces.IClickdatesAnnotatable")
 
         result = []
         for brain in brains:

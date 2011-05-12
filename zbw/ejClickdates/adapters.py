@@ -5,13 +5,16 @@ from zope.interface import implements, Interface
 from zope.component import adapts
 from zope.app.annotation.interfaces import IAnnotations
 
-from hbxt.clickdates.interfaces import IClickdates
+from zbw.ejClickdates.interfaces import IClickdates
 
 from BTrees.OOBTree import OOBTree
 from persistent.list import PersistentList
 
 import datetime
 
+
+#this is still the old key named after the old package. i havent got the time yet
+# to migrate the old annotations
 KEY = "hbxt.clickdates"
 
 class Clickdates:

@@ -25,15 +25,14 @@
         Downloads gesamt: <span tal:replace="view/sumThisMonth">123</span></p>
 
         <ol>
-            <li tal:repeat="article python:view.thisMonth()" style="font-size:11px; padding-right:15px;">
+            <li tal:repeat="article python:view.thisMonth()" style="font-size:11px; padding-right:15px;" tal:define="obj python:article[0]">
             [<strong><span tal:replace="python:article[1]">Downloads</span></strong>]
-                    <span tal:replace="python:', '.join(article[0].getAuthorsForTitle())">Authors</span>: 
+            <span tal:replace="obj/@@paperView/authors_as_string" />: 
                     
-                    <a href="#" tal:attributes="href
-                        python:article[0].absolute_url()">
-                        <span tal:replace="python:article[0].Title()">Titel</span>
-                    </a> (<span tal:replace="python:article[0].portal_type">Discussionpaper</span> 
-                    <span tal:replace="python:article[0].getId()">2008-9</span>)
+                    <a href="#" tal:attributes="href obj/absolute_url">
+                        <span tal:replace="obj/Title"a>Titel</span>
+                    </a> (<span tal:replace="obj/portal_type">Discussionpaper</span> 
+                    <span tal:replace="obj/getId">2008-9</span>)
 
                 </li>
                         

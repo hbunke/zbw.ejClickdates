@@ -28,7 +28,7 @@
                     <tal:block
                     tal:define="obj python:article[0];
                                 clicks python:article[1]">
-                    <span tal:replace="obj/@@paperView/getAuthorsForTitle">Authors</span>
+                                <span tal:replace="obj/@@paperView/authors_as_string" />
                     <br />
                     <a style="font-weight:bold;" href="#" tal:attributes="href obj/absolute_url">
                         <span tal:replace="obj/Title">Titel</span>

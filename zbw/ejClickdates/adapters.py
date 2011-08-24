@@ -13,8 +13,7 @@ from persistent.list import PersistentList
 import datetime
 
 
-#this is still the old key named after the old package. i havent got the time yet
-# to migrate the old annotations
+#XXX this is still the old key named after the old package.
 KEY = "hbxt.clickdates"
 
 class Clickdates:

@@ -42,5 +42,4 @@
         name="dlLastThreeMonth" 
         permission="zope2.Public" />
 
-
 </configure>

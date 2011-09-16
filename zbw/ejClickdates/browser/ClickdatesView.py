@@ -132,9 +132,10 @@ class ClickdatesView(BrowserView):
         # beware: index 'object_provides' is not available in Plone 2.1 and 2.5!
         # Please provide the index by hand or programmatically. You can
         # use the code from Plone 3.x (CatalogTool) 
-        brains = catalog.searchResults(portal_type="JournalPaper", 
-                object_provides="zbw.ejClickdates.interfaces.IClickdatesAnnotatable")
-
+        #
+        # XXX 2011-09-06 bislang wurden hier nur die journalpaper geholt. 
+        brains = catalog(object_provides="zbw.ejClickdates.interfaces.IClickdatesAnnotatable", sort_on="created",
+                sort_order="descending")
         result = []
         for brain in brains:
             obj = brain.getObject() # optimize! clickdates sollten in irgendeiner Form in den catalog.

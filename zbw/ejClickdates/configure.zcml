@@ -39,7 +39,7 @@
     <browser:page
         for="*"
         template="browser/dlLastThreeMonth.pt"
-        name="dlLastThreeMonth" 
+        name="most_downloaded_last_3_months" 
         permission="zope2.Public" />
 
 </configure>

@@ -37,7 +37,7 @@
     </browser:pages>
 
     <browser:page
-        for="*"
+        for="Products.CMFCore.interfaces.ISiteRoot"
         template="browser/dlLastThreeMonth.pt"
         name="most_downloaded_last_3_months" 
         permission="zope2.Public" />

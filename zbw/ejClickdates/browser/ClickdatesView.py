@@ -7,7 +7,7 @@
 from zope.interface import Interface
 from Products.Five.browser import BrowserView
 from Products.CMFCore.utils import getToolByName
-from zope.app.annotation.interfaces import IAnnotations
+from zope.annotation.interfaces import IAnnotations
 
 #from Products.AdvancedQuery import In, Eq, And, Or, Between
 

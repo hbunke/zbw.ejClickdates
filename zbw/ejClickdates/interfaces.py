@@ -2,7 +2,7 @@
 # Dr. Hendrik Bunke <hendrik.bunke@ifw-kiel.de>
 
 from zope.interface import Interface
-from zope.app.annotation.interfaces import IAttributeAnnotatable
+from zope.annotation.interfaces import IAttributeAnnotatable
 
 class IClickdatesAnnotatable(IAttributeAnnotatable):
     """

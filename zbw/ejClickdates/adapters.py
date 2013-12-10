@@ -3,7 +3,7 @@
 
 from zope.interface import implements, Interface
 from zope.component import adapts
-from zope.app.annotation.interfaces import IAnnotations
+from zope.annotation.interfaces import IAnnotations
 
 from zbw.ejClickdates.interfaces import IClickdates
 

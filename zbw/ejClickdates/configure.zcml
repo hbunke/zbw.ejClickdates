@@ -6,6 +6,9 @@
     <!--
     <include package="plone.memoize" />
     -->
+
+    <!-- for plone4; see http://inqbus-hosting.de/support/dokumentation/docs/plone-componentlookuperror-while-using-cmf.manageportal-in-zcml -->
+    <include package="Products.CMFCore" file="permissions.zcml" />
  
     <adapter factory=".adapters.Clickdates" />
 
